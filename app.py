@@ -37,7 +37,7 @@ def home():
         new_flight = { "name": flight_content["name"], "capacity": flight_content["capacity"], "routes": []}
         flight_id = app.db.flight.insert_one(new_flight).inserted_id
 
-        return jsonify(flight_content)
+        return json.loads(json_util.dumps(flight_id))
 
     flights = json_util.dumps(app.db.flight.find())
     return json.loads(flights)
