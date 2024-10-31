@@ -11,8 +11,6 @@ from pymongo.server_api import ServerApi
 #load .env file for MongoDB connection
 load_dotenv()
 
-client = MongoClient()
-
 app = Flask(__name__)
 
 # Create a new client and connect to the server
