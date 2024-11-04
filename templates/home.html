@@ -12,6 +12,13 @@
         </div>
         Let's Go!
     </header>
+    <p>
+        <ul>
+        {% for flight in flights %}
+            <li>{{ flight._id }}: {{ flight.name }} - {{ flight.capacity }}</li>
+        {% endfor %}
+        </ul>
+    </p>
 
 </body>
 </html>

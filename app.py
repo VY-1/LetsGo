@@ -29,8 +29,8 @@ app.db.flight = app.db.flight
 
 @app.route("/")
 def home():
-
-    return render_template("home.html")
+    flight_content = app.db.flight.find()
+    return render_template("home.html", flights=flight_content)
 
 @app.route("/flight", methods=["GET", "POST"])
 def flight():
