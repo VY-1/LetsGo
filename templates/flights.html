@@ -6,9 +6,26 @@
 </head>
 <body>
   <h1>Flights Details</h1>
-  
+  <section>
+      <h1>
+          Add new flight entry
+      </h1>
+      <form action="/flights" method="POST">
+          <p class="form__input">
+              <label for="flight_number" class="form__label">Flight Number</label>
+              <input type="text" name="flight_number" id="flight_number">
+              <label for="flight_capacity" class="form__label">Flight Capacity</label>
+              <input type="number" name="flight_capacity" id="flight_capacity">
+              <label for="origin">Origin</label>
+              <input type="text" name="origin" id="origin">
+              <label for="destination">Destination</label>
+              <input type="text" name="destination" id="destination">
+          </p>
+          <button type="submit" class="form__submit">Add flight entry</button>
+      </form>
+  </section>
   <p>
-    
+
     <ul>
         {% for flight in flights %}
         <li>

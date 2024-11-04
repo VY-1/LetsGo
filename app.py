@@ -34,13 +34,17 @@ def home():
 
 @app.route("/flights", methods=["GET", "POST"])
 def flight():
-
+    flight_routes = []
     if request.method == "POST":
-        flight_content = request.get_json()
-        new_flight = { "name": flight_content["name"], "capacity": flight_content["capacity"], "routes": flight_content["routes"]}
+        flight_number = request.form.get("flight_number")
+        flight_capacity = request.form.get("flight_capacity")
+        flight_origin = request.form.get("origin")
+        flight_destination = request.form.get("destination")
+        flight_routes.append({ "origin": flight_origin, "destination": flight_destination})
+        new_flight = { "name": flight_number, "capacity": flight_capacity, "routes": flight_routes }
         flight_id = app.db.flight.insert_one(new_flight).inserted_id
 
-        return json.loads(json_util.dumps(flight_id))
+       # return json.loads(json_util.dumps(flight_id))
 
     flights = app.db.flight.find()
     return render_template("flights.html", flights=flights)
