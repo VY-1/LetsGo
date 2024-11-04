@@ -32,17 +32,17 @@ def home():
     flight_content = app.db.flight.find()
     return render_template("home.html", flights=flight_content)
 
-@app.route("/flight", methods=["GET", "POST"])
+@app.route("/flights", methods=["GET", "POST"])
 def flight():
 
     if request.method == "POST":
         flight_content = request.get_json()
-        new_flight = { "name": flight_content["name"], "capacity": flight_content["capacity"], "routes": []}
+        new_flight = { "name": flight_content["name"], "capacity": flight_content["capacity"], "routes": flight_content["routes"]}
         flight_id = app.db.flight.insert_one(new_flight).inserted_id
 
         return json.loads(json_util.dumps(flight_id))
 
-    flights = json_util.dumps(app.db.flight.find())
-    return json.loads(flights)
+    flights = app.db.flight.find()
+    return render_template("flights.html", flights=flights)
 
 app.run(debug=True)
