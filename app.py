@@ -2,16 +2,18 @@ import json
 from bson import json_util, ObjectId
 
 from dotenv import load_dotenv, find_dotenv
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, flash, url_for, jsonify
 import os
 import pprint
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
+from flight import Flight
 
 #load .env file for MongoDB connection
 load_dotenv()
 
 app = Flask(__name__)
+app.config["SECRET_KEY"] = os.environ.get("FLASK_SECRET")
 
 # Create a new client and connect to the server
 client = MongoClient(os.environ.get("MONGODB_URI"), server_api=ServerApi('1'))
@@ -35,18 +37,25 @@ def home():
 @app.route("/flights", methods=["GET", "POST"])
 def flight():
     flight_routes = []
+    flight_details = Flight()
     if request.method == "POST":
-        flight_number = request.form.get("flight_number")
-        flight_capacity = request.form.get("flight_capacity")
-        flight_origin = request.form.get("origin")
-        flight_destination = request.form.get("destination")
+
+        flight_details = Flight(request.form)
+
+        flight_number = flight_details.flight_number.data
+        flight_capacity = flight_details.flight_capacity.data
+        flight_origin = flight_details.flight_origin.data
+        flight_destination = flight_details.flight_destination.data
+
         flight_routes.append({ "origin": flight_origin, "destination": flight_destination})
         new_flight = { "name": flight_number, "capacity": flight_capacity, "routes": flight_routes }
         flight_id = app.db.flight.insert_one(new_flight).inserted_id
-
+        flash("Successfully Inserted!", "success")
        # return json.loads(json_util.dumps(flight_id))
 
+    if request.method == "UPDATE":
+        pass
     flights = app.db.flight.find()
-    return render_template("flights.html", flights=flights)
+    return render_template("flights.html", form=flight_details, flights=flights)
 
 app.run(debug=True)

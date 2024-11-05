@@ -11,6 +11,69 @@
           Add new flight entry
       </h1>
       <form action="/flights" method="POST">
+          {{ form.csrf_token() }}
+          <fieldset class="form-group">
+              .
+              <legend>Add Flight</legend>
+              <div class="form-group">
+                  {{ form.flight_number.label(class="form-control-label") }}
+                  {% if form.flight_number.errors %}
+                    {{ form.flight_number(class="form-control is-invalid") }}
+                    {% for error in form.flight_number.errors %}
+                        <div class="invalid-feedback">
+                            <span>{{ error }}</span>
+                        </div>
+                    {% endfor %}
+                  {% else %}
+                    {{ form.flight_number(class="form-control") }}
+                  {% endif %}
+              </div>
+              <div class="form-group">
+                  {{ form.flight_capacity.label(class="form-control-label") }}
+                  {% if form.flight_capacity.errors %}
+                    {{ form.flight_capacity(class="form-control is-invalid") }}
+                    {% for error in form.flight_capacity.errors %}
+                        <div class="invalid-feedback">
+                            <span>{{ error }}</span>
+                        </div>
+                    {% endfor %}
+                  {% else %}
+                    {{ form.flight_capacity(class="form-control") }}
+                  {% endif %}
+              </div>
+              <div class="form-group">
+                  {{ form.flight_origin.label(class="form-control-label") }}
+                  {% if form.flight_origin.errors %}
+                    {{ form.flight_origin(class="form-control is-invalid") }}
+                    {% for error in form.flight_origin.errors %}
+                        <div class="invalid-feedback">
+                            <span>{{ error }}</span>
+                        </div>
+                    {% endfor %}
+                  {% else %}
+                    {{ form.flight_origin(class="form-control") }}
+                  {% endif %}
+              </div>
+              <div class="form-group">
+                  {{ form.flight_destination.label(class="form-control-label") }}
+                  {% if form.flight_destination.errors %}
+                    {{ form.flight_destination(class="form-control is-invalid") }}
+                    {% for error in form.flight_destination.errors %}
+                        <div class="invalid-feedback">
+                            <span>{{ error }}</span>
+                        </div>
+                    {% endfor %}
+                  {% else %}
+                    {{ form.flight_destination(class="form-control") }}
+                  {% endif %}
+              </div>
+              <div class="form-group">
+                  {{ form.submit(class="btn btn-outline-info") }}
+              </div>
+
+
+          </fieldset>
+<!--
           <p class="form__input">
               <label for="flight_number" class="form__label">Flight Number</label>
               <input type="text" name="flight_number" id="flight_number">
@@ -21,7 +84,9 @@
               <label for="destination">Destination</label>
               <input type="text" name="destination" id="destination">
           </p>
+
           <button type="submit" class="form__submit">Add flight entry</button>
+-->
       </form>
   </section>
   <p>
